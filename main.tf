@@ -31,3 +31,8 @@ module "rds" {
   db_user = "admin"
   instance_class = "db.t3.micro"
 }
+
+module "eks" {
+  source        = "app.terraform.io/jfrossetto/eks/aws"
+  version       = "1.0.0"
+}
