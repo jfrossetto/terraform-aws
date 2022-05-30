@@ -40,7 +40,7 @@ module "eks" {
 
 module "eks-node-group" {
   source        = "app.terraform.io/jfrossetto/eks-node-group/aws"
-  version       = "1.0.0"
+  version       = "1.0.1"
   cluster_name  = module.eks.cluster_name
 }
 
