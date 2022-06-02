@@ -1,6 +1,6 @@
 module "dbdev" {
   source        = "app.terraform.io/jfrossetto/rds/aws"
-  version       = "1.0.0"
+  version       = "1.0.3"
   db_name = "dbMysqlDev"
   db_pass = "password"
   db_user = "admin"
@@ -10,7 +10,7 @@ module "dbdev" {
 
 module "dbmain" {
   source        = "app.terraform.io/jfrossetto/rds/aws"
-  version       = "1.0.0"
+  version       = "1.0.3"
   db_name = "dbMysqlMain"
   db_pass = "password"
   db_user = "admin"
