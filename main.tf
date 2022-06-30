@@ -18,9 +18,10 @@ provider "aws" {
 
 module "ec2" {
   source        = "app.terraform.io/jfrossetto/ec2/aws"
-  version       = "1.0.0"
+  version       = "1.0.1"
   instance_name = "ec2-teste"
   instance_type = "t3.nano"
+  security_rds = aws_security_group.allow_rds.id
 }
 
 module "eks" {
@@ -33,5 +34,38 @@ module "eks-node-group" {
   source        = "app.terraform.io/jfrossetto/eks-node-group/aws"
   version       = "1.0.1"
   cluster_name  = module.eks.cluster_name
+}
+
+data "aws_vpc" "selected" {
+  filter {
+    name   = "tag:Name"
+    values = ["default"]
+  }  
+}
+
+
+resource "aws_security_group" "allow_rds" {
+  name        = "allow_rds"
+  description = "Allow rds inbound traffic"
+  vpc_id      = data.aws_vpc.selected.id
+
+  ingress {
+    description      = "RDS from VPC"
+    from_port        = 5432
+    to_port          = 5432
+    protocol         = "tcp"
+    cidr_blocks      = [data.aws_vpc.selected.cidr_block]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "allow_rds"
+  }
 }
 
