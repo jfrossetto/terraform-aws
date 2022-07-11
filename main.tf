@@ -16,6 +16,16 @@ provider "aws" {
   region = "us-east-1"
 }
 
+module "vpc" {
+  source          = "app.terraform.io/jfrossetto/vpc/aws"
+  vpc_cidr        = var.vpc_cidr
+  private_subnets = module.vpc.private_subnets
+  public_subnets  = module.vpc.public_subnets
+  nat_ips         = module.vpc.nat_ips
+  nat_gateway     = module.vpc.nat_gateway
+  version         = "1.0.0"  
+}
+
 module "ec2" {
   source        = "app.terraform.io/jfrossetto/ec2/aws"
   version       = "1.0.1"
