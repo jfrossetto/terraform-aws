@@ -18,7 +18,7 @@ provider "aws" {
 
 module "vpc" {
   source          = "app.terraform.io/jfrossetto/vpc/aws"
-  version         = "1.0.1"    
+  version         = "1.0.1"
   vpc_cidr        = var.vpc_cidr
   count_nat       = var.count_nat
   private_subnets = module.vpc.private_subnets
@@ -28,31 +28,33 @@ module "vpc" {
 }
 
 module "ec2" {
-  source        = "app.terraform.io/jfrossetto/ec2/aws"
-  version       = "1.1.3"
-  instance_name = "ec2-teste"
-  instance_type = "t3.nano"
-  security_rds = aws_security_group.allow_rds.id
+  source          = "app.terraform.io/jfrossetto/ec2/aws"
+  version         = "1.1.3"
+  instance_name   = "ec2-teste"
+  instance_type   = "t3.nano"
+  security_rds    = aws_security_group.allow_rds.id
   private_subnets = module.vpc.private_subnets
 }
 
 module "eks" {
-  source        = "app.terraform.io/jfrossetto/eks/aws"
-  version       = "1.0.1"
-  cluster_name  = var.cluster_name
+  source          = "app.terraform.io/jfrossetto/eks/aws"
+  version         = "1.0.2"
+  cluster_name    = var.cluster_name
+  private_subnets = module.vpc.private_subnets
 }
 
 module "eks-node-group" {
-  source        = "app.terraform.io/jfrossetto/eks-node-group/aws"
-  version       = "1.0.1"
-  cluster_name  = module.eks.cluster_name
+  source          = "app.terraform.io/jfrossetto/eks-node-group/aws"
+  version         = "1.0.3"
+  cluster_name    = module.eks.cluster_name
+  private_subnets = module.vpc.private_subnets
 }
 
 data "aws_vpc" "selected" {
   filter {
     name   = "tag:Name"
     values = ["default"]
-  }  
+  }
 }
 
 
