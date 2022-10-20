@@ -27,14 +27,16 @@ module "vpc" {
   nat_gateway     = module.vpc.nat_gateway
 }
 
+/*
 module "ec2" {
-  source          = "app.terraform.io/jfrossetto/ec2/aws"
-  version         = "1.1.3"
-  instance_name   = "ec2-teste"
-  instance_type   = "t3.nano"
+  source        = "app.terraform.io/jfrossetto/ec2/aws"
+  version       = "1.1.3"
+  instance_name = "ec2-teste"
+  instance_type = "t3.nano"
   security_rds    = aws_security_group.allow_rds.id
   private_subnets = module.vpc.private_subnets
 }
+*/
 
 module "eks" {
   source          = "app.terraform.io/jfrossetto/eks/aws"

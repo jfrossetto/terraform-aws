@@ -1,3 +1,4 @@
+/*
 module "dbdev" {
   source         = "app.terraform.io/jfrossetto/rds/aws"
   version        = "1.0.6"
@@ -43,3 +44,4 @@ resource "aws_db_subnet_group" "db_group" {
     Name = "My DB subnet group"
   }
 }
+*/
