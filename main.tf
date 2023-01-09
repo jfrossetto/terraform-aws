@@ -18,7 +18,7 @@ provider "aws" {
 
 module "vpc" {
   source          = "app.terraform.io/jfrossetto/vpc/aws"
-  version         = "1.0.2"
+  version         = "1.0.3"
   vpc_cidr        = var.vpc_cidr
   count_nat       = var.count_nat
   private_subnets = module.vpc.private_subnets
